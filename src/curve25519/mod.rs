@@ -89,3 +89,51 @@ impl Sub for Element {
 		])
 	}
 }
+
+macro_rules! expand {
+	($pt:ident, $off:expr, $shift:expr, $mask:expr) => (
+		( ($pt[$off + 0] as i64)
+		| ($pt[$off + 1] as i64) << 8
+		| ($pt[$off + 2] as i64) << 16
+		| ($pt[$off + 3] as i64) << 24
+		) >> $shift & $mask;
+	);
+}
+
+impl Element {
+	fn expand(point: &Point) -> Self {
+		let &Point(pt) = point;
+
+		Element([
+			expand!(pt, 0, 0, 0x3ffffff),
+			expand!(pt, 3, 2, 0x1ffffff),
+			expand!(pt, 6, 3, 0x3ffffff),
+			expand!(pt, 9, 5, 0x1ffffff),
+			expand!(pt, 12, 6, 0x3ffffff),
+			expand!(pt, 16, 0, 0x1ffffff),
+			expand!(pt, 19, 1, 0x3ffffff),
+			expand!(pt, 22, 3, 0x1ffffff),
+			expand!(pt, 25, 4, 0x3ffffff),
+			expand!(pt, 28, 6, 0x1ffffff),
+		])
+	}
+}
+
+impl Mul<Point> for Scalar {
+	type Output = Point;
+
+	fn mul(self, other: Point) -> Self::Output {
+		let &Scalar(scalar) = &self;
+
+		let mut e = scalar;
+
+		e[0] &= 248;
+		e[31] &= 127;
+		e[31] |= 64;
+
+		let bp = Element::expand(&other);
+
+		// FIXME: dummy return value
+		other
+	}
+}
