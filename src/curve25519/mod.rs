@@ -14,6 +14,14 @@ pub type SecretKey = Scalar;
 /// Curve25519 public key
 pub type PublicKey = Point;
 
+/// Curve25519 base point
+pub static BASE: Point = Point([
+	9, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0
+]);
+
 impl PartialEq for Scalar {
 	fn eq(&self, rhs: &Self) -> bool {
 		let &Scalar(lhs_array) = self;
