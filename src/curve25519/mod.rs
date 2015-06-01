@@ -23,20 +23,20 @@ pub static BASE: Point = Point([
 ]);
 
 impl PartialEq for Scalar {
-	fn eq(&self, rhs: &Self) -> bool {
-		let &Scalar(lhs_array) = self;
-		let &Scalar(rhs_array) = rhs;
-		lhs_array == rhs_array
+	fn eq(&self, other: &Self) -> bool {
+		let &Scalar(lhs) = self;
+		let &Scalar(rhs) = other;
+		lhs == rhs
 	}
 }
 
 impl Eq for Scalar {}
 
 impl PartialEq for Point {
-	fn eq(&self, rhs: &Self) -> bool {
-		let &Point(lhs_array) = self;
-		let &Point(rhs_array) = rhs;
-		lhs_array == rhs_array
+	fn eq(&self, other: &Self) -> bool {
+		let &Point(lhs) = self;
+		let &Point(rhs) = other;
+		lhs == rhs
 	}
 }
 
