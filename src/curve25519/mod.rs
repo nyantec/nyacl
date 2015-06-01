@@ -1,9 +1,11 @@
 use std::cmp::{Eq, PartialEq};
 
 /// Curve25519 scalar
+#[derive(Clone, Copy)]
 pub struct Scalar([u8; 32]);
 
 /// Curve25519 point
+#[derive(Clone, Copy)]
 pub struct Point([u8; 32]);
 
 impl PartialEq for Scalar {
